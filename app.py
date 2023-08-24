@@ -1,21 +1,17 @@
-from flask import Flask,render_template,request,redirect,url_for,flash
-from flask_cors import CORS
-from  keras.models import load_model
 import nltk
+nltk.download('popular')
 from nltk.stem import WordNetLemmatizer
 lemmatizer = WordNetLemmatizer()
 import pickle
 import numpy as np
-from keras.models import load_model
-from flask import Flask, request, jsonify
 
-model = load_model(r"D:\chatbotInterface\chat\chatbot_model.h5")
+from keras.models import load_model
+model = load_model('model.h5')
 import json
 import random
-intents = json.loads(open(r"D:\chatbotInterface\chat\faqData.json").read())
-words = pickle.load(open(r"D:\chatbotInterface\chat\words.pkl",'rb'))
-classes = pickle.load(open(r"D:\chatbotInterface\chat\classes.pkl",'rb'))
-app=Flask(__name__,template_folder='template')
+intents = json.loads(open('faqData.json').read())
+words = pickle.load(open('texts.pkl','rb'))
+classes = pickle.load(open('labels.pkl','rb'))
 
 def clean_up_sentence(sentence):
     # tokenize the pattern - split words into array
@@ -23,12 +19,14 @@ def clean_up_sentence(sentence):
     # stem each word - create short form for word
     sentence_words = [lemmatizer.lemmatize(word.lower()) for word in sentence_words]
     return sentence_words
+
 # return bag of words array: 0 or 1 for each word in the bag that exists in the sentence
+
 def bow(sentence, words, show_details=True):
     # tokenize the pattern
     sentence_words = clean_up_sentence(sentence)
     # bag of words - matrix of N words, vocabulary matrix
-    bag = [0]*len(words) 
+    bag = [0]*len(words)  
     for s in sentence_words:
         for i,w in enumerate(words):
             if w == s: 
@@ -37,6 +35,7 @@ def bow(sentence, words, show_details=True):
                 if show_details:
                     print ("found in bag: %s" % w)
     return(np.array(bag))
+
 def predict_class(sentence, model):
     # filter out predictions below a threshold
     p = bow(sentence, words,show_details=False)
@@ -50,7 +49,6 @@ def predict_class(sentence, model):
         return_list.append({"intent": classes[r[0]], "probability": str(r[1])})
     return return_list
 
-
 def getResponse(ints, intents_json):
     tag = ints[0]['intent']
     list_of_intents = intents_json['faqData']
@@ -59,28 +57,35 @@ def getResponse(ints, intents_json):
             result = random.choice(i['reply'])
             break
     return result
-def chatbot_response(text):
-    ints = predict_class(text, model)
+
+def chatbot_response(msg):
+    ints = predict_class(msg, model)
     res = getResponse(ints, intents)
     return res
 
-    
 
-# @app.route('/')
-# def home():
-#     return render_template('faq.html')
-
-
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
+app.static_folder = 'static'
 
-@app.route('/bot')
-def bot():
-    user_message = request.args.get('message','')
-    # Process the user message and generate a bot response
-    response=chatbot_response(user_message)
-    return jsonify({'message': response})
+@app.route("/")
+def home():
+    return render_template("home1.html")
+
+@app.route("/faq")
+def faq():    
+    return render_template('faq.html')
+
+@app.route('/index')
+def chat():
+    return render_template('index.html')
+
+@app.route("/get")
+def get_bot_response():
+    userText = request.args.get('msg')
+    return chatbot_response(userText)
 
 
-if __name__=='__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run()
