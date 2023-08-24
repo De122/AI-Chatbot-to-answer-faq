@@ -10,8 +10,8 @@ model = load_model('model.h5')
 import json
 import random
 intents = json.loads(open('faqData.json').read())
-words = pickle.load(open('texts.pkl','rb'))
-classes = pickle.load(open('labels.pkl','rb'))
+words = pickle.load(open('words.pkl','rb'))
+classes = pickle.load(open('classes.pkl','rb'))
 
 def clean_up_sentence(sentence):
     # tokenize the pattern - split words into array
