@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Healthway-Your own doctor</title>
     <style>
+        body{
+            background-color:#bd386d;
+        }
         #heading{
             margin:auto;
             text-align:center; 
@@ -24,11 +27,14 @@
              padding: 0;
              margin-bottom:100px;
           }
+          a{
+            text-decoration: none;
+          }
           #contentBar{
               margin:auto;
               background-color: rgba(0, 217, 255, 0.447);
-              width:1250px;
-              height:50px;
+              width:100%;
+              height:fit-content;
               border-radius:0px;
           }
 
@@ -49,11 +55,41 @@
   margin: 0;
   text-decoration: none;
   list-style-type: none;
+  color:white;
   
 }
+.fullform p{
+    
+    font-size:30px;
+    color:white;
+   text-align: center;
 
+}
 
+.s {
+    display: none;
+    font-size: 18px;
+    margin: 10px 0;
+    color:rgb(195, 127, 255);
+    background-color: aquamarine;
+    width:fit-content;
+    margin-left:330px;
+}
     </style>
+    <script>
+    function showContent(index) {
+    const sElements = document.querySelectorAll('.s');
+    
+    sElements.forEach(s => {
+        s.style.display = 'none';
+    });
+    
+    sElements[index].style.display = 'block';
+}
+
+       
+        
+    </script>
 </head>
 <body>
     <div id="heading">
@@ -69,17 +105,32 @@
     <div id="contentBar">
         <ul>
             
-   <li><a href="home1.html"><p style='color:white ;font-size: 20px';><strong>Home</strong></p></a></li>
-  <li> <a href="FAQ.html" target="_blank"><p style="color:white;font-size: 20px" ><strong>FAQ</strong></p></a></li>
+   <li><a href="/"><p style='color:white ;font-size: 20px';><strong>Home</strong></p></a></li>
+  <li> <a href="/faq" target="_blank"><p style="color:white;font-size: 20px" ><strong>FAQ</strong></p></a></li>
   <li> <a href="#aboutUs" ><p style="color:white; font-size:20px">About Us</p></a> </li>
         </ul>
 </div>
+<div class="fullform">
+    <p class="p1" onclick="showContent(0)">H</p>
+    <p class="p1" onclick="showContent(1)">E</p>
+    <p class="p1" onclick="showContent(2)">A</p>
+    <p class="p1" onclick="showContent(3)">L</p>
+    <p class="p1" onclick="showContent(4)">T</p>
+    <p class="p1" onclick="showContent(5)">H</p>
+    <p class="s">Help</p>
+    <p class="s">Efficient</p>
+    <p class="s">Accessible</p>
+    <p class="s">Lowcost</p>
+    <p class="s">Timely</p>
+    <p class="s">Healthcare</p>
+</div>
+
 
   
-    <div id="aboutUs" style="background:url('/img/aboutUS.jpg') no-repeat ; -webkit-background-size: cover;  -moz-background-size: cover; -o-background-size: cover; background-size: cover; background-color: transparent;">
+    <div id="aboutUs" style="background-image:url('https://i0.wp.com/post.medicalnewstoday.com/wp-content/uploads/sites/3/2019/12/GettyImages-481073822-1024x575.jpg?w=1155&h=1528') no-repeat ; -webkit-background-size: cover;  -moz-background-size: cover; -o-background-size: cover; background-size: cover; background-color: transparent;">
     <h2 style="color:rgba(238, 13, 137, 0.795);">About Us</h2>
-    <p id="aboutUSContent" >We, are a group of friends who are professional doctors as well. Having completed a degree and living a well-settled life, we want to help thoese who are in need of a medical help  but can't afford the expenses that come with it.</p>
-    <br><p id="aboutUSContent">Healthway has been started by us keeping the same motive.</p><br><p id="aboutUSContent">Our esteemed team of doctors:</p>
+    <p id="aboutUSContent" style="color:white;">We, are a group of friends who are professional doctors as well. Having completed a degree and living a well-settled life, we want to help thoese who are in need of a medical help  but can't afford the expenses that come with it.</p>
+    <br><p id="aboutUSContent" style="color:white" >Healthway has been started by us keeping the same motive.</p><br><p id="aboutUSContent" style="color:white">Our esteemed team of doctors:</p>
     <br>
     <ol>
         <li>Dr. Anjali Gupta , Gynaecologist (Freebreze Hospital)</li>
